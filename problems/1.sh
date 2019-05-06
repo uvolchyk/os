@@ -1,0 +1,1 @@
+pwd; ll; date
