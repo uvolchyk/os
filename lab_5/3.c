@@ -8,8 +8,8 @@
 int main() {
     int fd1, fd2, fd3;
     size_t size;
-    chat* my_string;
-    (void)unmask(0);
+    char* my_string1, my_string2;
+    (void)umask(0);
     if((fd1=open("file1",O_RDONLY)) < 0) {
         printf("Can\'t open file\n");
         exit(-1);
@@ -22,11 +22,14 @@ int main() {
         printf("Can\'t open file\n");
         exit(-1);
     }
-    read(fd1, my_string, 512);
-    read(fd2, my_string, 512);
-    write(fd3, my_string, 512);
-    if(close(fd) < 0) {
+    read(fd1, my_string1, 512);
+    read(fd2, my_string2, 512);
+    write(fd3, my_string1, 512);
+    write(fd3, my_string2, 512);
+    if(close(fd1) < 0) {
         printf("Can\'t close file\n");
     }
+    close(fd2);
+    close(fd3);
     return 0;
 }
