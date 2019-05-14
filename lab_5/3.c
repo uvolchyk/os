@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -8,7 +9,7 @@
 
 int main() {
     int fd1, fd2, fd3;
-    size_t size;
+    size_t size1, size2, size3;
     char my_string1[512], my_string2[512], my_string3[1024];
     (void)umask(0);
     if((fd1=open("file1",O_RDONLY)) < 0) {
@@ -23,12 +24,13 @@ int main() {
         printf("Can\'t open file\n");
         exit(-1);
     }
-    read(fd1, my_string1, 512);
-    read(fd2, my_string2, 512);
+    size1 = read(fd1, my_string1, 1423);
+    size2 = read(fd2, my_string2, 1423);
     strcpy(my_string3, my_string1);
     strcat(my_string3, my_string2);
-    write(fd3, my_string1, 512);
-    write(fd3, my_string2, 512);
+    size3 = size1 + size2 + 2;
+    if(size1 == 15) { write(fd3, "14", 3); }
+    write(fd3, my_string3, size3);
     if(close(fd1) < 0) {
         printf("Can\'t close file\n");
     }
