@@ -1,69 +1,47 @@
-#include <cstdio>
-#include <cstring>
- 
-using namespace std;
- 
-char strings1[1000][100];
-char strings2[1000][100];
- 
+#include <conio.h>
+#include <stdio.h>
+#include <io.h>
+#include <stdlib.h>
 int main()
 {
-    char ch;
-    char pr;
-    int k = 0, m = 0;
-    int p = 0, n = 0;
-    do
-    {
-        scanf("%c", &ch);
  
-        if (ch == ' ' && pr != ' ')
+        FILE *f1,*f2;//2 файла
+        char nameIn[20];//имя файла1(длина)
+        char nameOut[20];//имя файла2(длина)
+        char str[100] ;//строка в файле
+        int size;//переменная
+        printf("Vvedite imy faila: ");   //спрашиваешь имя
+        scanf("%s",nameIn);       //считываешь имя
+        f1 = fopen(nameIn,"r");//открываем файл 1
+        while (f1 == NULL)//цикл от ошибок,если не сущевствует файла1
         {
-            k++;
-            m = 0;
+              printf("\tError!\n");
+              printf("Vvedite imy faila: ");   //спрашиваешь имя
+              scanf("%s",nameIn);       //считываешь имя
+              f1 = fopen(nameIn,"r");//открытие файла1
         }
-        else
+        size = filelength(fileno(f1));//получаем размер файла
+        int readsize = fread(str,sizeof(char),sizeof(char)*size,f1);//читают строку из файла по символам.в переменную readsize записывается размер
+        for(int i=0;i<readsize;i++)//цикл замены букв в строке из файла
         {
-            strings1[k][m] = ch;
-            m++;
+                        if( str[i] == 'a' && str[i+1] == 'b' && str[i+2] == 'c')//происходит замена букв
+                                 {
+                                 str[i] = 'd';
+                                 str[i+1] = 'e';
+                                 str[i+2] = 'f';
+                                 }
         }
- 
-        pr = ch;
-    } while (ch != '\n');
-    k++;
- 
- 
-    do
-    {
-        scanf("%c", &ch);
- 
-        if (ch == ' ' && pr != ' ')
+        printf("Vvedite imy vihodnogo faila: ");   //спрашиваешь имя
+        scanf("%s",nameOut);       //считываешь имя
+        f2 = fopen(nameOut,"w");//открытие файла2
+        printf("\n");
+        printf("\tRezultat izmeneniy: \n");
+        for(int i=0;i<readsize;i++)//цикл показа результата на экране монитора
         {
-            p++;
-            n = 0;
+                printf("%c",str[i]);
+                fprintf(f2,"%c",str[i]);
         }
-        else
-        {
-            strings2[p][n] = ch;
-            n++;
-        }
- 
-        pr = ch;
-    } while (ch != '\n');
-    p++;
- 
-    printf("In the first line %d words\n", k);
-    printf("In the second line %d words\n", p);
- 
-    for (int i = 0; i < k; i++)
-    {
-        for (int j = 0; j < p; j++)
-        {
-            if (strcmp(strings1[i], strings2[j]) == 0)
-            {
-                printf("%s ", strings1[i]);
-            }
-        }
-    }
-    printf("\n");
-    return 0;
+        fclose(f2);//закрытие файла2
+        fclose(f1);//закрытие файла1
+getch() ;
 }
