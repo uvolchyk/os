@@ -11,7 +11,7 @@ int main(){
     int fd;
     size_t size, size2;
     char string[1000];
-    char old[] = "qwerty";
+    char old[] = "delete";
     char new[] = "hello";
     fd = open("file4.txt", O_RDONLY, 0666);
     if(fd < 0){
