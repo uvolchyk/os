@@ -11,18 +11,22 @@ int main(){
     int fd;
     size_t size, size2;
     char string[1000];
-    char old[] = "World";
-    char new[] = "Hello";
-    fd = open("file4.txt", O_RDONLY, 0666);
+    char old[256];
+	printf("Какое слово меняем? ");
+	scanf("%255[^\n]%*c", old);
+    char new[256];
+	printf("Какое слово вставляем? ");
+	scanf("%255[^\n]%*c", new);
+    fd = open("output", O_RDONLY, 0666);
     if(fd < 0){
-        fd = open("file4.txt", O_RDONLY|O_CREAT, 0666);
+        fd = open("output", O_RDONLY|O_CREAT, 0666);
         if(fd < 0) printf("Can\'t open file");
     }
     size = read(fd, string, 1000);
     close(fd);
-    fd = open("file4.txt", O_TRUNC, 0666);
+    fd = open("output", O_TRUNC, 0666);
     close(fd);
-    fd = open("file4.txt", O_WRONLY, 0666);
+    fd = open("output", O_WRONLY, 0666);
     int length = strlen(string);
     bool flag;
     for(int i = 0; i < length; i++){
