@@ -1,10 +1,12 @@
-<<<<<<< HEAD
-znak=$( bc <<< "n^($1-1)%$1" )
- if [ $znak = 1 ];
-  then echo "Chislo $1 prostoe";
-   else echo "Chislo $1 sostavnoe";
- fi
-=======
-n<< awk { sqrt(4) }
-echo $n
->>>>>>> 6f273149a531b7bf7c5f60f52699a8d7ec36fc99
+if [ $1 = 1 ] || [ $1 = 2 ]; then echo Это простое число && exit 1; fi
+c=$(echo "scale=0; sqrt($1)" | bc -l)
+i=2;
+while [ $i -le $c ]
+do
+	if [ $(( $1 % $i )) = 0 ]; then
+		echo "Это составное число"
+		exit 1;
+	fi
+	i=$(( $i + 1 ));
+done
+echo "Это простое число"

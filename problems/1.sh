@@ -1,1 +1,1 @@
-pwd; ll; date
+pwd; ls -l1; date
