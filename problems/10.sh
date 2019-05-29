@@ -1,1 +1,1 @@
-pkill -f $1
+kill -s KILL $1
